@@ -264,6 +264,16 @@
                                 </li>
                             @endif --}}
 
+                            @if (Auth::user()->can('module_barangmasuk'))
+                                <li>
+                                    <a href="{{ route('barang-masuk.index') }}">
+                                        <div class="parent-icon"><i class='bx bx-box'></i>
+                                        </div>
+                                        <div class="menu-title">Barang Masuk</div>
+                                    </a>
+                                </li>
+                            @endif
+
                             {{-- Permissions barang --}}
                             @if (Auth::user()->can('module_barang'))
                                 <li>
@@ -271,6 +281,17 @@
                                         <div class="parent-icon"><i class='bx bx-box'></i>
                                         </div>
                                         <div class="menu-title">Barang</div>
+                                    </a>
+                                </li>
+                            @endif
+
+                            {{-- Permissions Supplier --}}
+                            @if (Auth::user()->can('module_supplier'))
+                                <li>
+                                    <a href="{{ route('supplier.index') }}">
+                                        <div class="parent-icon"><i class='bx bxs-truck'></i>
+                                        </div>
+                                        <div class="menu-title">Supplier</div>
                                     </a>
                                 </li>
                             @endif

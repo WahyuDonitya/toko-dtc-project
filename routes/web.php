@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorsController;
 use Illuminate\Support\Facades\Auth;
@@ -45,5 +47,19 @@ Route::middleware(['auth'])->group(function () {
         Route::resources([
             'barangs' => BarangController::class
         ]);
+    });
+
+    // Permission supplier
+    Route::middleware(['can:module_supplier'])->group(function () {
+        Route::resources([
+            'supplier' => SupplierController::class
+        ]);
+    });
+
+    // permission barang masuk
+    Route::middleware(['can:module_barangmasuk'])->group(function () {
+        Route::prefix('barang-masuk')->group(function () {
+            Route::get('index', [BarangMasukController::class, 'index'])->name('barang-masuk.index');
+        });
     });
 });

@@ -46,7 +46,7 @@
                                             <div class="col-12">
                                                 <label for="inputEmailAddress" class="form-label">Username</label>
                                                 <input type="text" class="form-control" id="inputEmailAddress"
-                                                    placeholder="jhon@example.com" name="user_name">
+                                                    placeholder="jhon" name="user_name">
                                             </div>
                                             <div class="col-12">
                                                 <label for="inputChoosePassword" class="form-label">Password</label>

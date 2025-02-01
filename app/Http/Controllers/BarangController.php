@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BarangModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BarangController extends Controller
 {
@@ -14,6 +15,9 @@ class BarangController extends Controller
     public function index()
     {
         $barang = BarangModel::all();
+        $title = 'Hapus Barang!';
+        $text = "Apakah anda yakin ingin hapus data barang?";
+        confirmDelete($title, $text);
         return view('barang.index', compact([
             'barang'
         ]));
@@ -73,7 +77,10 @@ class BarangController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $barang = BarangModel::find($id);
+        return view('barang.create', compact([
+            'barang'
+        ]));
     }
 
     /**
@@ -81,7 +88,27 @@ class BarangController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            "barang_nama" => 'required',
+            "barang_barcode" => 'required'
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $barang = BarangModel::find($id);
+
+            $barang->update([
+                'barang_nama' => $request->barang_nama,
+                'barang_barcode' => $request->barang_barcode
+            ]);
+
+            DB::commit();
+            return redirect()->route('barangs.index')->with('success', 'Berhasil melakukan edit data!');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('danger', 'Gagal melakukan edit Data!');
+        }
     }
 
     /**
@@ -89,6 +116,15 @@ class BarangController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $data = BarangModel::find($id)->delete();
+            DB::commit();
+            return redirect()->back()->with('success', 'Berhasil hapus data!');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('danger', 'Gagal hapus data!');
+        }
     }
 }

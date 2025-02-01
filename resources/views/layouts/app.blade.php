@@ -51,6 +51,7 @@
 
 <body>
     <!--wrapper-->
+    @include('sweetalert::alert')
     <div class="wrapper">
         <!--sidebar wrapper -->
         <div class="sidebar-wrapper" data-simplebar="true">

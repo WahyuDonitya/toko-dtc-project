@@ -25,7 +25,9 @@
                             <th scope="col">Username</th>
                             <th scope="col">Tanggal Daftar</th>
                             <th scope="col" class="text-center">Module Barang</th>
+                            <th scope="col" class="text-center">Module Supplier</th>
                             <th scope="col" class="text-center">Module Setting Akses Pengguna</th>
+                            <th scope="col" class="text-center">Module Barang Masuk</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,13 +40,22 @@
                                 <td>{{ $data->created_at->format('d-m-Y H:i:s') }}</td>
                                 <td align="center">
                                     <input type="checkbox" class="permission-checkbox" data-user-id="{{ $data->id }}"
-                                        data-permission="module_barang"
-                                        {{ $data->can('module_barang') ? 'checked' : '' }}>
+                                        data-permission="module_barang" {{ $data->can('module_barang') ? 'checked' : '' }}>
+                                </td>
+                                <td align="center">
+                                    <input type="checkbox" class="permission-checkbox" data-user-id="{{ $data->id }}"
+                                        data-permission="module_supplier"
+                                        {{ $data->can('module_supplier') ? 'checked' : '' }}>
                                 </td>
                                 <td align="center">
                                     <input type="checkbox" class="permission-checkbox" data-user-id="{{ $data->id }}"
                                         data-permission="module_settinguserprivilage"
                                         {{ $data->can('module_settinguserprivilage') ? 'checked' : '' }}>
+                                </td>
+                                <td align="center">
+                                    <input type="checkbox" class="permission-checkbox" data-user-id="{{ $data->id }}"
+                                        data-permission="module_barangmasuk"
+                                        {{ $data->can('module_barangmasuk') ? 'checked' : '' }}>
                                 </td>
                             </tr>
                         @endforeach
