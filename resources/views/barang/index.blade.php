@@ -25,33 +25,11 @@
                             <th scope="col">Barcode Barang</th>
                             <th scope="col">Nama Barang</th>
                             <th scope="col" class="text-center">Stok Barang Keseluruhan</th>
+                            <th scope="col" class="text-center">HET</th>
+                            <th scope="col" class="text-center">Harga Barang</th>
                             <th scope="col" class="text-center">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($barang as $b)
-                            <tr>
-                                <td scope="row">{{ $loop->iteration }}</td>
-                                <td>{{ $b->barang_barcode }}</td>
-                                <td>{{ $b->barang_nama }}</td>
-                                <td class="text-center">{{ $b->barang_stok }}</td>
-                                <td class="text-center">
-                                    <a href="{{ route('barangs.show', $b->id) }}" class="btn btn-sm btn-primary"
-                                        title="Lihat Detail">
-                                        <i class="bx bx-show"></i>
-                                    </a>
-                                    <a href="{{ route('barangs.edit', $b->id) }}" class="btn btn-sm btn-success"
-                                        title="Edit">
-                                        <i class="bx bx-edit"></i>
-                                    </a>
-                                    <a href="{{ route('barangs.destroy', $b->id) }}" class="btn btn-sm btn-danger"
-                                        title="Delete" data-confirm-delete="true">
-                                        <i class="bx bx-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -60,6 +38,99 @@
 
 @push('js')
     <script>
-        $('#table-barang').DataTable();
+        const table = $('#table-barang').DataTable({
+            serverSide: true,
+            processing: true,
+            ajax: {
+                url: '{{ route('barangs.index') }}'
+            },
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'barang_barcode',
+                    name: 'barang_barcode'
+                },
+                {
+                    data: 'barang_nama',
+                    name: 'barang_nama'
+                },
+                {
+                    data: 'barang_stok',
+                    name: 'barang_stok',
+                    className: 'text-center'
+                },
+                {
+                    data: 'barang_harga',
+                    name: 'barang_harga',
+                    className: 'text-center'
+                },
+                {
+                    data: 'het',
+                    name: 'het',
+                    className: 'text-center'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false,
+                    className: 'text-center'
+                },
+            ]
+        });
+
+
+        $('table').on('click', '.delete-barang', function() {
+            Swal.fire({
+                title: "Konfirmasi Hapus",
+                text: "Apakah anda yakin ingin hapus data?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Hapus"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const id = $(this).data('id');
+                    if (id) {
+                        $.ajax({
+                            url: '{{ route('barangs.destroy', ':id') }}'.replace(':id', id),
+                            method: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.status === 'success') {
+                                    table.ajax.reload(null, false);
+                                    Swal.fire({
+                                        title: "SUKSES!",
+                                        text: response.message,
+                                        icon: "success"
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: "GAGAL!",
+                                        text: response.message,
+                                        icon: "error"
+                                    });
+                                }
+                            },
+                            error: function(xhr) {
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: "Terjadi kesalahan pada server.",
+                                    icon: "error"
+                                });
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    }
+                }
+            });
+        });
     </script>
 @endpush

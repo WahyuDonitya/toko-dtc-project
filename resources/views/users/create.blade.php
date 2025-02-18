@@ -77,9 +77,18 @@
 @push('js')
     <script>
         function handleClickSubmit() {
-            if (window.confirm('Are you sure to submit this data?')) {
-                document.getElementById('usersForm').submit();
-            }
+            Swal.fire({
+                title: "Apakah data yang dimasukkan sudah benar?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Simpan"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('usersForm').submit();
+                }
+            });
         }
     </script>
 @endpush

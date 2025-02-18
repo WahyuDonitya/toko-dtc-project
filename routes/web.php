@@ -47,6 +47,10 @@ Route::middleware(['auth'])->group(function () {
         Route::resources([
             'barangs' => BarangController::class
         ]);
+        Route::prefix('barang')->group(function () {
+            Route::post('import', [BarangController::class, 'import'])->name('barang.import');
+            Route::get('view-import', [BarangController::class, 'importView'])->name('barang.import.view');
+        });
     });
 
     // Permission supplier

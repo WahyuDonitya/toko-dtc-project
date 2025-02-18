@@ -31,6 +31,7 @@
     <!-- Theme Style CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/swal/swal.css') }}" />
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" /> --}}
     <title>
         @stack('tittle')
@@ -129,33 +130,45 @@
     <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/notifications/js/notification-custom-script.js') }}"></script>
+    <script src="{{ asset('assets/swal/swal.js') }}"></script>
     <!--app JS-->
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script>
         new PerfectScrollbar(".app-container")
 
         @if (session()->has('success'))
-            Lobibox.notify('success', {
-                pauseDelayOnHover: true,
-                size: 'mini',
-                rounded: true,
-                delayIndicator: false,
-                continueDelayOnInactiveTab: false,
-                position: 'top right',
-                icon: 'bx bx-check-circle',
-                msg: 'Sukses<br>{{ session()->get('success') }}'
+            // Lobibox.notify('success', {
+            //     pauseDelayOnHover: true,
+            //     size: 'mini',
+            //     rounded: true,
+            //     delayIndicator: false,
+            //     continueDelayOnInactiveTab: false,
+            //     position: 'top right',
+            //     icon: 'bx bx-check-circle',
+            // msg: 'Sukses<br>{{ session()->get('success') }}'
+            // });
+            Swal.fire({
+                title: "SUKSES!",
+                text: '{{ session()->get('success') }}',
+                icon: "success"
             });
         @endif
         @if (session()->has('danger'))
-            Lobibox.notify('error', {
-                pauseDelayOnHover: true,
-                size: 'mini',
-                rounded: true,
-                delayIndicator: false,
-                icon: 'bx bx-x-circle',
-                continueDelayOnInactiveTab: false,
-                position: 'top right',
-                msg: 'Danger <br>{{ session()->get('danger') }}'
+            // Lobibox.notify('error', {
+            //     pauseDelayOnHover: true,
+            //     size: 'mini',
+            //     rounded: true,
+            //     delayIndicator: false,
+            //     icon: 'bx bx-x-circle',
+            //     continueDelayOnInactiveTab: false,
+            //     position: 'top right',
+            //     msg: 'Danger <br>{{ session()->get('danger') }}'
+            // });
+            Swal.fire({
+                icon: "error",
+                title: 'Danger <br>{{ session()->get('danger') }}'
+                text: "",
+                // footer: '<a href="#">Why do I have this issue?</a>'
             });
         @endif
     </script>

@@ -20,5 +20,7 @@ class SupplierModel extends Model
         'supplier_telpon',
         'supplier_alamat',
         'supplier_tempo',
+        'sales_nama',
+        'sales_phone'
     ];
 }

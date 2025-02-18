@@ -19,5 +19,7 @@ class BarangModel extends Model
         'barang_barcode',
         'barang_nama',
         'barang_stok',
+        'het',
+        'barang_harga'
     ];
 }

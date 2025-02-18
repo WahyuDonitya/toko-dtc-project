@@ -19,7 +19,8 @@
                         <select name="barang" id="barang" class="select2">
                             <option value="">Pilih barang</option>
                             @foreach ($barang as $b)
-                                <option value="{{ $b->id }}">{{ $b->barang_nama }}</option>
+                                <option value="{{ $b->id }}" data-id="{{ $b->id }}">{{ $b->barang_nama }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -100,5 +101,10 @@
                 document.getElementById('barangMasuk').submit();
             }
         }
+
+        $('#barang').change(function() {
+            var selectedId = $(this).val();
+            alert(selectedId);
+        });
     </script>
 @endpush
