@@ -166,8 +166,8 @@
             // });
             Swal.fire({
                 icon: "error",
-                title: 'Danger <br>{{ session()->get('danger') }}'
-                text: "",
+                title: "Oops...",
+                text: '{{ session()->get('danger') }}',
                 // footer: '<a href="#">Why do I have this issue?</a>'
             });
         @endif

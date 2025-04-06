@@ -63,7 +63,9 @@ Route::middleware(['auth'])->group(function () {
     // permission barang masuk
     Route::middleware(['can:module_barangmasuk'])->group(function () {
         Route::prefix('barang-masuk')->group(function () {
+            Route::post('/', [BarangMasukController::class, 'store'])->name('barang-masuk.store');
             Route::get('index', [BarangMasukController::class, 'index'])->name('barang-masuk.index');
+            Route::get('get-harga-barang', [BarangMasukController::class, 'getHargaBarang'])->name('barang-masuk.gethargabarang');
         });
     });
 });
