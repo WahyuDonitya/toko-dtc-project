@@ -64,13 +64,13 @@
                     className: 'text-center'
                 },
                 {
-                    data: 'barang_harga',
-                    name: 'barang_harga',
+                    data: 'het',
+                    name: 'het',
                     className: 'text-center'
                 },
                 {
-                    data: 'het',
-                    name: 'het',
+                    data: 'barang_harga',
+                    name: 'barang_harga',
                     className: 'text-center'
                 },
                 {
@@ -130,7 +130,7 @@
                         });
                     }
                 }
-            });
+            }); 
         });
     </script>
 @endpush
