@@ -19,6 +19,17 @@ class DbarangMasukModel extends Model
         'hbarang_masuk',
         'barang_id',
         'barangmasuk_jumlah',
-        'barangmasuk_harga'
+        'barangmasuk_harga',
+        'exp'
     ];
+
+    public function hbarangMasuk()
+    {
+        return $this->belongsTo(HbarangMasukModel::class, 'hbarang_masuk');
+    }
+
+    public function barang()
+    {
+        return $this->belongsTo(BarangModel::class, 'barang_id');
+    }
 }

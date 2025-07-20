@@ -40,13 +40,6 @@ class BarangController extends Controller
         }
 
         return view('barang.index');
-        // $barang = BarangModel::all();
-        // $title = 'Hapus Barang!';
-        // $text = "Apakah anda yakin ingin hapus data barang?";
-        // confirmDelete($title, $text);
-        // return view('barang.index', compact([
-        //     'barang'
-        // ]));
     }
 
     /**

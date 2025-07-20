@@ -17,12 +17,11 @@ class DetailBarangModel extends Model
 
     protected $fillable = [
         'barang_id',
-        'supplier_id',
         'harga_beli',
         'harga_jual',
         'batch',
         'exp_date',
-        'stok'
+        'stok',
+        'status'
     ];
-
 }

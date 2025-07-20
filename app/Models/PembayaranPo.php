@@ -6,20 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class HbarangMasukModel extends Model
+class PembayaranPo extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'hbarang_masuk';
+    protected $table = 'history_pembayaran_po';
     public $primaryKey = 'id';
     public $incrementing = true;
     public $timestamps = true;
 
     protected $fillable = [
-        'barangmasuk_nota',
-        'supplier_id',
-        'mengetahui',
         'po_id',
-        'created_by'
+        'user_id',
+        'metode_pembayaran',
+        'keterangan',
+        'tanggal_pembayaran',
+        'jumlah_bayar'
     ];
 }

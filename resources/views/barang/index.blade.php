@@ -66,12 +66,24 @@
                 {
                     data: 'het',
                     name: 'het',
-                    className: 'text-center'
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        if (type === 'display' && data) {
+                            return parseFloat(data).toLocaleString('id-ID');
+                        }
+                        return data;
+                    }
                 },
                 {
                     data: 'barang_harga',
                     name: 'barang_harga',
-                    className: 'text-center'
+                    className: 'text-center',
+                    render: function(data, type, row) {
+                        if (type === 'display' && data) {
+                            return parseFloat(data).toLocaleString('id-ID');
+                        }
+                        return data;
+                    }
                 },
                 {
                     data: 'action',
@@ -130,7 +142,7 @@
                         });
                     }
                 }
-            }); 
+            });
         });
     </script>
 @endpush

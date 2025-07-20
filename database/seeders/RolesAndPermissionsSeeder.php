@@ -21,7 +21,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'module_settinguserprivilage',
             'module_barang',
             'module_supplier',
-            'module_barangmasuk'
+            'module_barangmasuk',
+            'module_purchaseorder'
         ];
 
         foreach ($permissions as $permission) {

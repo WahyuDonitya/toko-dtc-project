@@ -28,6 +28,7 @@
                             <th scope="col" class="text-center">Module Supplier</th>
                             <th scope="col" class="text-center">Module Setting Akses Pengguna</th>
                             <th scope="col" class="text-center">Module Barang Masuk</th>
+                            <th scope="col" class="text-center">Module Purchase Order</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,6 +58,11 @@
                                         data-permission="module_barangmasuk"
                                         {{ $data->can('module_barangmasuk') ? 'checked' : '' }}>
                                 </td>
+                                <td align="center">
+                                    <input type="checkbox" class="permission-checkbox" data-user-id="{{ $data->id }}"
+                                        data-permission="module_purchaseorder"
+                                        {{ $data->can('module_purchaseorder') ? 'checked' : '' }}>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -77,6 +83,7 @@
                 var userId = $(this).data('user-id');
                 var permission = $(this).data('permission');
                 var isChecked = $(this).is(':checked');
+                console.log(permission);
 
                 $.ajax({
                     url: '{{ route('users.updatepermission') }}',

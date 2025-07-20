@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
@@ -66,6 +67,17 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/', [BarangMasukController::class, 'store'])->name('barang-masuk.store');
             Route::get('index', [BarangMasukController::class, 'index'])->name('barang-masuk.index');
             Route::get('get-harga-barang', [BarangMasukController::class, 'getHargaBarang'])->name('barang-masuk.gethargabarang');
+            Route::get('get-detail-barang', [BarangMasukController::class, 'getDetailBarang'])->name('barang-masuk.getdetailbarang');
+        });
+    });
+
+    Route::middleware(['can:module_purchaseorder'])->group(function () {
+        Route::prefix('purchase-order')->group(function () {
+            Route::get('/', [PurchaseOrderController::class, 'index'])->name('purchase-order.index');
+            Route::get('/create', [PurchaseOrderController::class, 'create'])->name('purchase-order.create');
+            Route::post('/store', [PurchaseOrderController::class, 'store'])->name('purchase-order.store');
+            Route::get('/{id}', [PurchaseOrderController::class, 'show'])->name('purchase-order.show');
+            Route::post('/add/po-payment',[PurchaseOrderController::class, 'storepopayment'])->name('purchase-order.store.po-payment');
         });
     });
 });

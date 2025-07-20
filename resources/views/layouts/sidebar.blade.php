@@ -263,7 +263,24 @@
                                     </a>
                                 </li>
                             @endif --}}
-
+                            @if (Auth::user()->can('module_purchaseorder'))
+                                <li class="menu-label">Pembelian</li>
+                                <li>
+                                    <a href="{{ route('purchase-order.create') }}">
+                                        <div class="parent-icon"><i class='bx bx-shopping-bag'></i>
+                                        </div>
+                                        <div class="menu-title">Buat PO</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('purchase-order.index') }}">
+                                        <div class="parent-icon"><i class='bx bx-file'></i>
+                                        </div>
+                                        <div class="menu-title">List PO</div>
+                                    </a>
+                                </li>
+                            @endif
+                            {{-- <li class="menu-label">Report</li> --}}
                             @if (Auth::user()->can('module_barangmasuk'))
                                 <li>
                                     <a href="{{ route('barang-masuk.index') }}">

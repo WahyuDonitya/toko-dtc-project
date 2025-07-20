@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hbarang_masuk', function (Blueprint $table) {
+        Schema::create('history_pembayaran_po', function (Blueprint $table) {
             $table->id();
-            $table->string('barangmasuk_nota');
-            $table->bigInteger('supplier_id')->unsigned();
-            $table->foreign('supplier_id')->references('id')->on('supplier');
-            $table->string('mengetahui')->nullable();
+            $table->bigInteger('po_id')->unsigned();
+            $table->foreign('po_id')->references('id')->on('h_purchaseorder');
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->bigInteger('jumlah_bayar');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('hbarang_masuk');
+        Schema::dropIfExists('history_pembayaran_po');
     }
 };
