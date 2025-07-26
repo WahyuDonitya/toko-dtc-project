@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ConstantHelper;
 use App\Imports\BarangImport;
 use App\Models\BarangModel;
+use App\Models\DetailBarangModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -90,9 +92,42 @@ class BarangController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, Request $request)
     {
-        //
+        $barang = BarangModel::find($id);
+
+        $query = DetailBarangModel::where('barang_id', $id)->where('status', '!=', ConstantHelper::STATUS_DETAIL_BARANG_HABIS);
+
+        if ($request->ajax()) {
+            return DataTables::eloquent($query)
+                ->addIndexColumn()
+                ->editColumn('harga_beli', function ($item) {
+                    return 'Rp ' . number_format($item->harga_beli, 0, ',', '.');
+                })
+                ->editColumn('harga_jual', function ($item) {
+                    return 'Rp ' . number_format($item->harga_jual, 0, ',', '.');
+                })
+                ->editColumn('status', function ($item) {
+                    if ($item->status == ConstantHelper::STATUS_DETAIL_BARANG_HABIS) {
+                        return '<span class="badge bg-danger">Barang Habis</span>';
+                    } elseif ($item->status == ConstantHelper::STATUS_DETAIL_BARANG_EXP) {
+                        return '<span class="badge bg-warning text-dark">Expired</span>';
+                    } elseif ($item->status == ConstantHelper::STATUS_DETAIL_BARANG_ADA) {
+                        return '<span class="badge bg-success">Ada</span>';
+                    } else {
+                        return '<span class="badge bg-secondary">Tidak Diketahui</span>';
+                    }
+                })
+                ->addColumn('exp_date_formatted', function ($item) {
+                    return \Carbon\Carbon::parse($item->exp_date)->format('d-m-Y');
+                })
+                ->rawColumns(['status'])
+                ->make(true);
+        }
+
+        return view('barang.show', compact([
+            'barang'
+        ]));
     }
 
     /**

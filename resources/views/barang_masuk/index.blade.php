@@ -7,7 +7,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <h5>Barang Masuk</h5>
+            <h5>Barang Masuk ke gudang</h5>
             <hr>
             <p><b><i>Nb: Isi bagian tanggal expired dan jumlah datang saja</i></b></p>
 

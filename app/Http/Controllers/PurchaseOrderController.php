@@ -66,7 +66,7 @@ class PurchaseOrderController extends Controller
                     } else if ($po->status_penerimaan == ConstantHelper::STATUS_PENERIMAAN_DITERIMASEBAGIAN) {
                         return '<span class="badge bg-warning">Dikirim Sebagian</span>';
                     } else if ($po->status_penerimaan == ConstantHelper::STATUS_PENERIMAAN_SUDAHTUNTAS) {
-                        return '<span class="badge bg-success">Sudah Lunas</span>';
+                        return '<span class="badge bg-success">Sudah Komplit</span>';
                     }
                 })
                 ->filterColumn("supplier_nama", function ($query, $value) {

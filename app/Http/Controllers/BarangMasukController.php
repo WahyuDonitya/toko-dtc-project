@@ -204,7 +204,7 @@ class BarangMasukController extends Controller
         $barang = BarangModel::find($request->id);
 
         if ($barang) {
-            return response()->json(['success' => true, 'harga' => $barang->barang_harga]);
+            return response()->json(['success' => true, 'harga' => $barang->barang_harga, 'stok' => $barang->barang_stok]);
         }
 
         return response()->json(['success' => false]);

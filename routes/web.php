@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CustomersController;
@@ -61,13 +62,18 @@ Route::middleware(['auth'])->group(function () {
         ]);
     });
 
-    // permission barang masuk
+    // permission barang masuk dan barang keluar
     Route::middleware(['can:module_barangmasuk'])->group(function () {
         Route::prefix('barang-masuk')->group(function () {
             Route::post('/', [BarangMasukController::class, 'store'])->name('barang-masuk.store');
             Route::get('index', [BarangMasukController::class, 'index'])->name('barang-masuk.index');
             Route::get('get-harga-barang', [BarangMasukController::class, 'getHargaBarang'])->name('barang-masuk.gethargabarang');
             Route::get('get-detail-barang', [BarangMasukController::class, 'getDetailBarang'])->name('barang-masuk.getdetailbarang');
+        });
+
+        Route::prefix('barang-keluar')->group(function () {
+            Route::get('/create', [BarangKeluarController::class, 'create'])->name('barang-keluar.create');
+            Route::post('/store', [BarangKeluarController::class, 'store'])->name('barang-keluar.store');
         });
     });
 
@@ -77,7 +83,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create', [PurchaseOrderController::class, 'create'])->name('purchase-order.create');
             Route::post('/store', [PurchaseOrderController::class, 'store'])->name('purchase-order.store');
             Route::get('/{id}', [PurchaseOrderController::class, 'show'])->name('purchase-order.show');
-            Route::post('/add/po-payment',[PurchaseOrderController::class, 'storepopayment'])->name('purchase-order.store.po-payment');
+            Route::post('/add/po-payment', [PurchaseOrderController::class, 'storepopayment'])->name('purchase-order.store.po-payment');
         });
     });
 });
