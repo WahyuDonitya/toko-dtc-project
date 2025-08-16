@@ -17,16 +17,62 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use Yajra\DataTables\Facades\DataTables;
 
 class BarangMasukController extends Controller
 {
-    public function index()
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $barang_masuk = HbarangMasukModel::with(['Po', 'Po.Supplier'])
+                ->orderBy('created_at', 'desc');
+
+            return DataTables::eloquent($barang_masuk)
+                ->addIndexColumn()
+                ->addColumn('barangmasuk_nota', function ($row) {
+                    return $row->barangmasuk_nota ?? '-';
+                })
+                ->addColumn('hpo_nota', function ($row) {
+                    return $row->Po->hpo_nota ?? '-';
+                })
+                ->addColumn('mengetahui', function ($row) {
+                    return $row->mengetahui ?? '-';
+                })
+                ->addColumn('supplier', function ($row) {
+                    return $row->Po->Supplier->supplier_nama ?? '-';
+                })
+                ->addColumn('sales', function ($row) {
+                    return $row->Po->hpo_sales ?? '-';
+                })
+                ->addColumn('nomor_sales', function ($row) {
+                    return $row->Po->hpo_sales_phone ?? '-';
+                })
+                ->addColumn('created_at', function ($row) {
+                    return $row->created_at->format('d-M-Y') ?? '-';
+                })
+                ->addColumn('aksi', function ($row) {
+                    $showUrl = route('barang-masuk.show', $row->id);
+                    return '
+                        <a href="' . $showUrl . '" class="btn btn-sm btn-primary">
+                            <i class="bx bx-show"></i>
+                        </a>
+                    ';
+                })
+                ->rawColumns(['aksi'])
+                ->make(true);
+        }
+
+        return view('barang_masuk.index');
+    }
+
+
+    public function create()
     {
         $barang = BarangModel::all();
         $supplier = SupplierModel::all();
 
         $purchaseOrders = HPurchaseOrderModel::where('status_penerimaan', '!=', ConstantHelper::STATUS_PENERIMAAN_SUDAHTUNTAS)->get();
-        return view('barang_masuk.index', compact([
+        return view('barang_masuk.create', compact([
             'barang',
             'supplier',
             'purchaseOrders'
@@ -197,7 +243,45 @@ class BarangMasukController extends Controller
         }
     }
 
+    public function show(string $id, Request $request)
+    {
+        $hbarang_masuk = HbarangMasukModel::where('id', $id)->with(['Po', 'Po.Supplier'])->first();
 
+        if ($request->ajax()) {
+            $dbarang_masuk = DbarangMasukModel::where('hbarang_masuk', $id)->with(['barang'])
+                ->orderBy('created_at', 'desc');
+
+            return DataTables::eloquent($dbarang_masuk)
+                ->addIndexColumn()
+                ->addColumn('barang_nama', function ($row) {
+                    return $row->barang->barang_nama ?? '-';
+                })
+                ->addColumn('exp_formated', function ($row) {
+                    try {
+                        return $row->exp ? \Carbon\Carbon::parse($row->exp)->format('d-M-Y') : '-';
+                    } catch (\Exception $e) {
+                        return '-';
+                    }
+                })
+                ->addColumn('barangmasuk_jumlah', function ($row) {
+                    return $row->barangmasuk_jumlah ?? '-';
+                })
+                ->addColumn('barangmasuk_harga_formated', function ($row) {
+                    return $row->barangmasuk_harga ? 'Rp ' . number_format($row->barangmasuk_harga, 0, ',', '.') : '-';
+                })
+                ->addColumn('sub_total', function ($row) {
+                    if ($row->barangmasuk_jumlah && $row->barangmasuk_harga) {
+                        return 'Rp ' . number_format($row->barangmasuk_jumlah * $row->barangmasuk_harga, 0, ',', '.');
+                    }
+                    return '-';
+                })
+                ->make(true);
+        }
+
+        return view('barang_masuk.show', compact([
+            'hbarang_masuk'
+        ]));
+    }
 
     public function getHargaBarang(Request $request)
     {

@@ -22,4 +22,9 @@ class ConstantHelper
     const STATUS_DETAIL_BARANG_ADA = 0;
     const STATUS_DETAIL_BARANG_HABIS = 1;
     const STATUS_DETAIL_BARANG_EXP = 2;
+
+    // status barang keluar
+    const STATUS_BARANG_KELUAR_DIKIRIM = 0;
+    const STATUS_BARANG_KELUAR_DITERIMA = 1;
+    const STATUS_BARANG_KELUAR_DITERIMA_KURANG = 2;
 }

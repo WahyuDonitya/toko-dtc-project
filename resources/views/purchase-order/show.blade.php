@@ -1,41 +1,53 @@
 @extends('layouts.app')
 
-@push('tittle')
+@push('title')
     Detail PO
 @endpush
 
 @section('content')
+    <div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+        <div class="ms-auto">
+            <a href="{{ url()->previous() }}" class="btn btn-secondary">
+                <i class="bx bx-arrow-back"></i> Kembali
+            </a>
+        </div>
+    </div>
     <div class="card">
         <div class="card-body">
-            <h5>Detail Purchase Order</h5>
-            <hr>
-
-            <p><strong>Informasi Header PO</strong></p>
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>Nomor Nota:</strong> {{ $hpo->hpo_nota }}</p>
-                    <p><strong>Supplier:</strong> {{ $hpo->supplier->supplier_nama ?? '-' }}</p>
-                    <p><strong>Detail Supplier:</strong> {{ $hpo->hpo_supplierdetail }}</p>
-                    <p><strong>Sales:</strong> {{ $hpo->hpo_sales }}</p>
-                    <p><strong>Nomor HP Sales:</strong> {{ $hpo->hpo_sales_phone }}</p>
+            <h4 class="mb-4">Detail PO</h4>
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0">Informasi Header PO</h6>
                 </div>
-                <div class="col-md-6">
-                    <p><strong>Jatuh Tempo:</strong> {{ \Carbon\Carbon::parse($hpo->hpo_jatuhtempo)->format('d-m-Y') }}</p>
-                    <p><strong>Total Pembelian:</strong> Rp {{ number_format($hpo->hpo_jumlahpembelian, 0, ',', '.') }}</p>
-                    <p><strong>Total Dibayar:</strong> Rp {{ number_format($hpo->hpo_jumlahdibayar, 0, ',', '.') }}</p>
-                    <p><strong>Sisa Pembayaran:</strong> Rp {{ number_format($hpo->hpo_jumlahbelumdibayar, 0, ',', '.') }}
-                    </p>
-                    <p><strong>Status:</strong>
-                        @if ($hpo->isLunas == 1)
-                            <span class="badge bg-success">Lunas</span>
-                        @else
-                            <span class="badge bg-warning text-dark">Belum Lunas</span>
-                        @endif
-                    </p>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Nomor Nota:</strong> {{ $hpo->hpo_nota }}</p>
+                            <p><strong>Supplier:</strong> {{ $hpo->supplier->supplier_nama ?? '-' }}</p>
+                            <p><strong>Detail Supplier:</strong> {{ $hpo->hpo_supplierdetail }}</p>
+                            <p><strong>Sales:</strong> {{ $hpo->hpo_sales }}</p>
+                            <p><strong>Nomor HP Sales:</strong> {{ $hpo->hpo_sales_phone }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Jatuh Tempo:</strong>
+                                {{ \Carbon\Carbon::parse($hpo->hpo_jatuhtempo)->format('d-m-Y') }}</p>
+                            <p><strong>Total Pembelian:</strong> Rp
+                                {{ number_format($hpo->hpo_jumlahpembelian, 0, ',', '.') }}</p>
+                            <p><strong>Total Dibayar:</strong> Rp {{ number_format($hpo->hpo_jumlahdibayar, 0, ',', '.') }}
+                            </p>
+                            <p><strong>Sisa Pembayaran:</strong> Rp
+                                {{ number_format($hpo->hpo_jumlahbelumdibayar, 0, ',', '.') }}</p>
+                            <p><strong>Status:</strong>
+                                @if ($hpo->isLunas == 1)
+                                    <span class="badge bg-success">Lunas</span>
+                                @else
+                                    <span class="badge bg-warning text-dark">Belum Lunas</span>
+                                @endif
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <hr>
 
             <ul class="nav nav-tabs" id="poDetailTabs" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -55,8 +67,8 @@
             <div class="tab-content p-3 border border-top-0 rounded-bottom" id="poDetailTabsContent">
                 <div class="tab-pane fade show active" id="barang" role="tabpanel" aria-labelledby="barang-tab">
                     <div class="table-responsive">
-                        <table id="detailPoTable" class="table table-bordered w-100">
-                            <thead class="table-light">
+                        <table id="detailPoTable" class="table table-striped w-100">
+                            <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Barang</th>
@@ -80,8 +92,8 @@
                                 </button>
                             </div>
                         @endif
-                        <table id="paymentHistoryTable" class="table table-bordered w-100">
-                            <thead class="table-light">
+                        <table id="paymentHistoryTable" class="table table-striped w-100">
+                            <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Tanggal Pembayaran</th>
@@ -159,7 +171,6 @@
                 },
                 columns: [{
                         data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
                         orderable: false,
                         searchable: false
                     },
@@ -169,17 +180,11 @@
                     },
                     {
                         data: 'dpo_jumlahbarang',
-                        name: 'dpo_jumlahbarang',
-                        render: function(data) {
-                            return data + ' pcs';
-                        }
+                        render: data => data + ' pcs'
                     },
                     {
                         data: 'dpo_jumlahbarang_terima',
-                        name: 'dpo_jumlahbarang_terima',
-                        render: function(data) {
-                            return data + ' pcs';
-                        }
+                        render: data => data + ' pcs'
                     },
                     {
                         data: 'dpo_harga',
@@ -191,9 +196,7 @@
                     },
                     {
                         data: 'status',
-                        name: 'status',
-                        orderable: true,
-                        searchable: false
+                        name: 'status'
                     },
                 ],
             });
@@ -209,7 +212,6 @@
                 },
                 columns: [{
                         data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
                         orderable: false,
                         searchable: false
                     },
@@ -227,17 +229,13 @@
                     },
                     {
                         data: 'keterangan',
-                        name: 'keterangan',
-                        render: function(data) {
-                            return data || '-';
-                        }
+                        render: data => data || '-'
                     },
                 ],
                 order: [
                     [1, 'desc']
                 ]
             });
-
 
             $('#submit-pembayaran').click(function() {
                 Swal.fire({
@@ -250,11 +248,8 @@
                     confirmButtonText: "Simpan"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        if (result.isConfirmed) {
-                            document.getElementById('formPembayaran').submit();
-                        }
+                        document.getElementById('formPembayaran').submit();
                     }
-
                 });
             });
         });

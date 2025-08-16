@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('tittle')
-    Detail Barang
+    Barang Masuk
 @endpush
 
 @section('content')
@@ -14,49 +14,57 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <h4 class="mb-4">Detail Barang</h4>
+            <h4 class="mb-4">Detail Barang Masuk</h4>
 
-            {{-- Informasi Header Barang --}}
+            {{-- Informasi Header Barang Masuk --}}
             <div class="card border shadow-sm mb-4">
                 <div class="card-header bg-light fw-bold">
-                    Informasi Header Barang
+                    Informasi Header Barang Masuk
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Nama Barang</label>
+                            <label class="form-label fw-bold">Nota Barang Masuk</label>
                             <div class="form-control-plaintext">
-                                {{ $barang->barang_nama }}
+                                {{ $hbarang_masuk->barangmasuk_nota }}
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Harga Barang</label>
+                            <label class="form-label fw-bold">Nomor PO</label>
                             <div class="form-control-plaintext">
-                                Rp {{ number_format($barang->barang_harga, 0, ',', '.') }}
+                                {{ $hbarang_masuk->Po->hpo_nota }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Supplier</label>
+                            <div class="form-control-plaintext">
+                                {{ $hbarang_masuk->Po->supplier->supplier_nama }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Sales</label>
+                            <div class="form-control-plaintext">
+                                {{ $hbarang_masuk->Po->hpo_sales }} / {{ $hbarang_masuk->Po->hpo_sales_phone ?? '-' }}
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">HET</label>
+                            <label class="form-label fw-bold">Karyawan Mengetahui</label>
                             <div class="form-control-plaintext">
-                                Rp {{ number_format($barang->het, 0, ',', '.') }}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">Status</label>
-                            <div class="form-control-plaintext">
-                                {{ $barang->status ?? '-' }}
+                                {{ $hbarang_masuk->mengetahui ?? '-' }}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {{-- Detail Barang Table --}}
+            {{-- Detail Barang Masuk --}}
             <div class="card border shadow-sm">
                 <div class="card-header bg-light fw-bold">
-                    Detail Barang
+                    Detail Barang Masuk
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -64,22 +72,21 @@
                             <thead class="table-light">
                                 <tr>
                                     <th>No</th>
-                                    <th>Exp Date</th>
-                                    <th>Batch</th>
-                                    <th>Harga Beli</th>
-                                    <th>Harga Jual</th>
-                                    <th>Stok</th>
-                                    <th>Status</th>
+                                    <th>Nama Barang</th>
+                                    <th>Expired Date</th>
+                                    <th>Jumlah Datang</th>
+                                    <th>Harga Satuan</th>
+                                    <th>Subtotal</th>
                                 </tr>
                             </thead>
                         </table>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
-
 
 @push('js')
     <script>
@@ -88,7 +95,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('barangs.show', $barang->id) }}",
+                    url: "{{ route('barang-masuk.show', $hbarang_masuk->id) }}",
                 },
                 columns: [{
                         data: 'DT_RowIndex',
@@ -97,32 +104,36 @@
                         searchable: false
                     },
                     {
-                        data: 'exp_date_formatted',
-                        name: 'exp_date'
+                        data: 'barang_nama',
+                        name: 'barang.barang_nama',
+                        orderable: true,
+                        searchable: true
                     },
                     {
-                        data: 'batch',
-                        name: 'batch'
+                        data: 'exp_formated',
+                        name: 'exp',
+                        orderable: true,
+                        searchable: false
                     },
                     {
-                        data: 'harga_beli',
-                        name: 'harga_beli'
+                        data: 'barangmasuk_jumlah',
+                        name: 'barangmasuk_jumlah',
+                        orderable: true,
+                        searchable: false
                     },
                     {
-                        data: 'harga_jual',
-                        name: 'harga_jual'
+                        data: 'barangmasuk_harga_formated',
+                        name: 'barangmasuk_harga',
+                        orderable: true,
+                        searchable: false
                     },
                     {
-                        data: 'stok',
-                        name: 'stok'
-                    },
-                    {
-                        data: 'status',
-                        name: 'status',
+                        data: 'sub_total',
+                        name: 'sub_total',
                         orderable: false,
                         searchable: false
                     },
-                ]
+                ],
             });
         });
     </script>

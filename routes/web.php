@@ -66,13 +66,16 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['can:module_barangmasuk'])->group(function () {
         Route::prefix('barang-masuk')->group(function () {
             Route::post('/', [BarangMasukController::class, 'store'])->name('barang-masuk.store');
+            Route::get('create', [BarangMasukController::class, 'create'])->name('barang-masuk.create');
             Route::get('index', [BarangMasukController::class, 'index'])->name('barang-masuk.index');
+            Route::get('show/{id}', [BarangMasukController::class, 'show'])->name('barang-masuk.show');
             Route::get('get-harga-barang', [BarangMasukController::class, 'getHargaBarang'])->name('barang-masuk.gethargabarang');
             Route::get('get-detail-barang', [BarangMasukController::class, 'getDetailBarang'])->name('barang-masuk.getdetailbarang');
         });
 
         Route::prefix('barang-keluar')->group(function () {
             Route::get('/create', [BarangKeluarController::class, 'create'])->name('barang-keluar.create');
+            Route::get('index', [BarangKeluarController::class, 'index'])->name('barang-keluar.index');
             Route::post('/store', [BarangKeluarController::class, 'store'])->name('barang-keluar.store');
         });
     });

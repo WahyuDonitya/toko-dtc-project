@@ -18,6 +18,8 @@ return new class extends Migration
             $table->bigInteger('barang_id')->unsigned();
             $table->foreign('barang_id')->references('id')->on('barang');
             $table->bigInteger('jumlah');
+            $table->date('exp_date');
+            $table->integer('status_terima');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -47,7 +47,7 @@
                             <li class="menu-label">Inventory</li>
                             @if (Auth::user()->can('module_barangmasuk'))
                                 <li>
-                                    <a href="{{ route('barang-masuk.index') }}">
+                                    <a href="{{ route('barang-masuk.create') }}">
                                         <div class="parent-icon"><i class='bx bx-box'></i></div>
                                         <div class="menu-title">Barang Masuk</div>
                                     </a>

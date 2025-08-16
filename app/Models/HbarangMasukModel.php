@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class HbarangMasukModel extends Model
@@ -22,4 +23,14 @@ class HbarangMasukModel extends Model
         'po_id',
         'created_by'
     ];
+
+    /**
+     * Get the Po that owns the HbarangMasukModel
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function Po(): BelongsTo
+    {
+        return $this->belongsTo(HPurchaseOrderModel::class, 'po_id', 'id');
+    }
 }

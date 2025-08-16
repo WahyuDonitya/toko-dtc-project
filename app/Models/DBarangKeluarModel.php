@@ -19,5 +19,7 @@ class DBarangKeluarModel extends Model
         'barangkeluar_id',
         'barang_id',
         'jumlah',
+        'exp_date',
+        'status_terima'
     ];
 }

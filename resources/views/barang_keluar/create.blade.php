@@ -6,9 +6,16 @@
 
 
 @section('content')
+    <div class="page-breadcrumb d-sm-flex align-items-center mb-3">
+        <div class="ms-auto">
+            <a href="{{ route('barang-keluar.index') }}" class="btn btn-primary">
+                <i class="bx bx-list-ul"></i>List Barang Keluar
+            </a>
+        </div>
+    </div>
     <div class="card">
         <div class="card-body">
-            <h5>Barang keluar dari gudang</h5>
+            <h5 class="mb-0">Barang Keluar dari Gudang</h5>
             <hr>
             <p><b><i>Nb: Tanda <span class="text-danger">*)</span> Wajib diisi</i></b></p>
 
@@ -112,7 +119,8 @@
                     </tbody>
                 </table>
 
-                <button type="button" class="btn btn-success" id="btnSave" onclick="handleClickSubmit()">Simpan Barang
+                <button type="button" class="btn btn-success" id="btnSave" onclick="handleClickSubmit()"><i
+                        class="bx bx-save"></i>Simpan Barang
                     Keluar</button>
             </form>
         </div>
@@ -161,8 +169,8 @@
             $('#btnTambahBarang').on('click', function() {
                 const barangId = $('#barang').val();
                 const barangText = $('#barang option:selected').text();
-                const jumlah = $('#jumlah').val();
-                const jumlahBarang = $('#jumlahBarang').val();
+                const jumlah = parseInt($('#jumlah').val());
+                const jumlahBarang = parseInt($('#jumlahBarang').val());
 
                 if (!barangId || !jumlah || jumlah <= 0) {
                     alert('Silakan pilih barang dan masukkan jumlah yang valid.');
@@ -218,6 +226,13 @@
                 if (jumlah > stok) {
                     alert('Barang keluar melebihi stok yang ada');
                     jumlahInput.val(stok);
+                    return
+                }
+
+                if (jumlah <= 0) {
+                    alert('Barang keluar harus lebih dari 0! hapus jika tidak perlu');
+                    jumlahInput.val(stok);
+                    return;
                 }
             });
 

@@ -96,7 +96,7 @@ class BarangController extends Controller
     {
         $barang = BarangModel::find($id);
 
-        $query = DetailBarangModel::where('barang_id', $id)->where('status', '!=', ConstantHelper::STATUS_DETAIL_BARANG_HABIS);
+        $query = DetailBarangModel::where('barang_id', $id)->orderBy('created_at', 'desc');
 
         if ($request->ajax()) {
             return DataTables::eloquent($query)

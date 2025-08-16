@@ -37,13 +37,13 @@ class UpdateStokBarang extends Command
 
         foreach ($barangs as $barang) {
             $stokAktif = DetailBarangModel::where('barang_id', $barang->id)
-                ->whereDate('exp_date', '>=', $now)
+                ->whereDate('exp_date', '>', $now)
                 ->sum('stok');
 
             $barang->barang_stok = $stokAktif;
             $barang->save();
 
-            DetailBarangModel::whereDate('exp_date', '<', $now)
+            DetailBarangModel::whereDate('exp_date', '<=', $now)
                 ->where('barang_id', $barang->id)
                 ->where('status', '!=', ConstantHelper::STATUS_DETAIL_BARANG_EXP)
                 ->update(['status' => ConstantHelper::STATUS_DETAIL_BARANG_EXP]);
