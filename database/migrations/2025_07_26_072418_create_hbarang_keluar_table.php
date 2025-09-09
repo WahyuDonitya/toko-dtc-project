@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('barangkeluar_nota');
             $table->string('penanggung_jawab');
             $table->string('catatan')->nullable();
+            $table->integer('status');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -19,8 +19,6 @@ class BarangKeluarController extends Controller
 {
     public function index(Request $request)
     {
-
-
         if ($request->ajax()) {
             $barang_keluar = HBarangKeluarModel::orderBy('created_at', 'desc')->with(['user']);
 
@@ -46,7 +44,7 @@ class BarangKeluarController extends Controller
                     }
                 })
                 ->addColumn('aksi', function ($row) {
-                    $showUrl = route('barang-masuk.show', $row->id);
+                    $showUrl = route('barang-keluar.show', $row->id);
                     return '
                         <a href="' . $showUrl . '" class="btn btn-sm btn-primary">
                             <i class="bx bx-show"></i>
@@ -98,7 +96,8 @@ class BarangKeluarController extends Controller
                 'created_by' => Auth::user()->id,
                 'barangkeluar_nota' => $this->createNoNota(),
                 'penanggung_jawab' => $request->penanggung_jawab,
-                'catatan' => $request->catatan
+                'catatan' => $request->catatan,
+                'status' => ConstantHelper::STATUS_BARANG_KELUAR_DIKIRIM
             ]);
 
             foreach ($request->barang_id as $index => $barangId) {
@@ -197,6 +196,32 @@ class BarangKeluarController extends Controller
                 ])
                 ->with('danger',  $e->getMessage());
         }
+    }
+
+    public function show(Request $request, $id)
+    {
+        $barang_keluar = HBarangKeluarModel::where('id', $id)->with(['user'])->first();
+
+        if ($request->ajax()) {
+            $dbarang_keluar = DBarangKeluarModel::where('barangkeluar_id', $id)->with(['barang']);
+
+            return DataTables::eloquent($dbarang_keluar)
+                ->addIndexColumn()
+                ->addColumn('barang', function ($row) {
+                    return $row->barang->barang_nama ?? '-';
+                })
+                ->addColumn('exp_date', function ($row) {
+                    return $row->exp_date ?? '-';
+                })
+                ->addColumn('jumlah', function ($row) {
+                    return $row->jumlah ?? '-';
+                })
+                ->make(true);
+        }
+
+        return view('barang_keluar.show', compact([
+            'barang_keluar'
+        ]));
     }
 
     function createNoNota()

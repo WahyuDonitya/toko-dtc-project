@@ -78,7 +78,26 @@
                     orderable: false,
                     searchable: false
                 }
-            ]
+            ],
+            createdRow: function(row, data, dataIndex) {
+                $(row).attr('data-id', data.id);
+
+                $(row).css('cursor', 'pointer');
+            }
+        });
+
+        let lastClick = 0;
+        $('#table-barang-masuk tbody').on('click', 'tr', function() {
+            const now = new Date().getTime();
+            const doubleClickThreshold = 500;
+
+            if (now - lastClick < doubleClickThreshold) {
+                const id = $(this).data('id');
+                if (id) {
+                    window.location.href = '{{ route('barang-masuk.show', '') }}/' + id;
+                }
+            }
+            lastClick = now;
         });
     </script>
 @endpush

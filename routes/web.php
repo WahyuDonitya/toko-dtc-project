@@ -6,6 +6,7 @@ use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PenerimaanBarangController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SupplierController;
@@ -77,7 +78,15 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create', [BarangKeluarController::class, 'create'])->name('barang-keluar.create');
             Route::get('index', [BarangKeluarController::class, 'index'])->name('barang-keluar.index');
             Route::post('/store', [BarangKeluarController::class, 'store'])->name('barang-keluar.store');
+            Route::get('/show/{id}', [BarangKeluarController::class, 'show'])->name('barang-keluar.show');
         });
+    });
+
+    // permission penerimaan barang di toko
+    Route::middleware(['can:module_penerimaanbarang'])->group(function () {
+        Route::resources([
+            'penerimaan_toko' => PenerimaanBarangController::class
+        ]);
     });
 
     Route::middleware(['can:module_purchaseorder'])->group(function () {

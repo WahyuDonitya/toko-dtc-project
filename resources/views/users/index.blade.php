@@ -29,6 +29,7 @@
                             <th scope="col" class="text-center">Module Setting Akses Pengguna</th>
                             <th scope="col" class="text-center">Module Barang Masuk</th>
                             <th scope="col" class="text-center">Module Purchase Order</th>
+                            <th scope="col" class="text-center">Module Penerimaan Barang Toko</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,6 +63,12 @@
                                     <input type="checkbox" class="permission-checkbox" data-user-id="{{ $data->id }}"
                                         data-permission="module_purchaseorder"
                                         {{ $data->can('module_purchaseorder') ? 'checked' : '' }}>
+                                </td>
+                                <td align="center">
+                                    <input type="checkbox" class="permission-checkbox" data-user-id="{{ $data->id }}"
+                                        data-permission="	
+                                        module_penerimaanbarang"
+                                        {{ $data->can('module_penerimaanbarang') ? 'checked' : '' }}>
                                 </td>
                             </tr>
                         @endforeach

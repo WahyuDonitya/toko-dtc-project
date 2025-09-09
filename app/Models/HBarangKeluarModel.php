@@ -20,7 +20,8 @@ class HBarangKeluarModel extends Model
         'created_by',
         'barangkeluar_nota',
         'penanggung_jawab',
-        'catatan'
+        'catatan',
+        'status'
     ];
 
     /**

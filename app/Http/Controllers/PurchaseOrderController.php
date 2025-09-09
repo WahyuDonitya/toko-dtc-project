@@ -228,7 +228,7 @@ class PurchaseOrderController extends Controller
         $request->validate([
             'tanggal' => 'required',
             'jumlah_bayar' => 'required|numeric|min:1',
-            'metode_pembayaran' => 'required'
+            'metode_pembayaran' => 'required',
         ]);
 
         DB::beginTransaction();
@@ -239,7 +239,8 @@ class PurchaseOrderController extends Controller
                 'po_id' => $request->po_id,
                 'metode_pembayaran' => $request->metode_pembayaran,
                 'jumlah_bayar' => $request->jumlah_bayar,
-                'tanggal_pembayaran' => $request->tanggal
+                'tanggal_pembayaran' => $request->tanggal,
+                'keterangan' => $request->keterangan
             ]);
 
             $po = HPurchaseOrderModel::find($request->po_id);

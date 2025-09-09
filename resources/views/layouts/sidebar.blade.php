@@ -69,6 +69,16 @@
                                 </li>
                             @endif
 
+                            <li class="menu-label">Toko</li>
+                            @if (Auth::user()->can('module_penerimaanbarang'))
+                                <li>
+                                    <a href="{{ route('penerimaan_toko.create') }}">
+                                        <div class="parent-icon"><i class='bx bx-box'></i></div>
+                                        <div class="menu-title">Penerimaan Toko</div>
+                                    </a>
+                                </li>
+                            @endif
+
                             <!-- Master Data -->
                             <li class="menu-label">Master Data</li>
                             @if (Auth::user()->can('module_supplier'))

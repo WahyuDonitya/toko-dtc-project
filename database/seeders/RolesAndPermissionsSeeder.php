@@ -22,7 +22,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'module_barang',
             'module_supplier',
             'module_barangmasuk',
-            'module_purchaseorder'
+            'module_purchaseorder',
+            'module_penerimaanbarang'
         ];
 
         foreach ($permissions as $permission) {
