@@ -84,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
 
     // permission penerimaan barang di toko
     Route::middleware(['can:module_penerimaanbarang'])->group(function () {
+        Route::get('penerimaan_toko/detail', [PenerimaanBarangController::class, 'getdetail'])->name('penerimaan_toko.getdetail');
         Route::resources([
             'penerimaan_toko' => PenerimaanBarangController::class
         ]);

@@ -100,33 +100,33 @@
                             }
 
                             let row = `
-                        <tr>
-                            <td>
-                                <input type="hidden" name="barang_ids[]" value="${detail.barang_id}">
-                                ${detail.nama_barang}
-                            </td>
-                            <td>
-                                <input type="number" name="jumlah_datang[]" value="${jumlahDatang}" class="form-control" required>
-                            </td>
-                            <td>
-                                <input type="date" name="exps[]" class="form-control" required>
-                            </td>
-                            <td>
-                                <input type="number" name="jumlah_pesanan[]" value="${detail.jumlah}" class="form-control" readonly>
-                            </td>
-                            <td>
-                                <input type="number" name="jumlah_barangditerima[]" value="${detail.jumlah_barangditerima}" class="form-control" readonly>
-                            </td>
-                            <td>
-                                <input type="number" name="hargas[]" value="${detail.harga}" class="form-control" readonly>
-                            </td>
-                            <td>
-                                <button type="button" onclick="hapusRow(this)" class="btn btn-danger btn-sm">
-                                    <i class="bx bx-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="barang_ids[]" value="${detail.barang_id}">
+                                        ${detail.nama_barang}
+                                    </td>
+                                    <td>
+                                        <input type="number" name="jumlah_datang[]" value="${jumlahDatang}" class="form-control" required>
+                                    </td>
+                                    <td>
+                                        <input type="date" name="exps[]" class="form-control" required>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="jumlah_pesanan[]" value="${detail.jumlah}" class="form-control" readonly>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="jumlah_barangditerima[]" value="${detail.jumlah_barangditerima}" class="form-control" readonly>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="hargas[]" value="${detail.harga}" class="form-control" readonly>
+                                    </td>
+                                    <td>
+                                        <button type="button" onclick="hapusRow(this)" class="btn btn-danger btn-sm">
+                                            <i class="bx bx-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
                             tbody.append(row);
                         });
                     } else {

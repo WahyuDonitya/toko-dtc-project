@@ -20,6 +20,7 @@ class DBarangKeluarModel extends Model
         'barangkeluar_id',
         'barang_id',
         'jumlah',
+        'jumlah_terima',
         'exp_date',
         'status_terima'
     ];

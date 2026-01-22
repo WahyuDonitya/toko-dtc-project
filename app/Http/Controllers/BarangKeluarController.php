@@ -160,6 +160,7 @@ class BarangKeluarController extends Controller
                             'barangkeluar_id' => $header->id,
                             'barang_id' => $barangId,
                             'jumlah' => $jumlahCounter,
+                            'jumlah_terima' => 0,
                             'exp_date' => $detail_barang->exp_date,
                             'status_terima'  => ConstantHelper::STATUS_BARANG_KELUAR_DIKIRIM
                         ]);

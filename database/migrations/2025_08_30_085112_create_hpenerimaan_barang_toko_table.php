@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('hpenerimaan_barang_toko', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('diterima_oleh')->unsigned();
-            $table->foreign('diterima_oleh')->references('id')->on('users');
+            $table->bigInteger('created_by')->unsigned();
+            $table->foreign('created_by')->references('id')->on('users');
             $table->bigInteger('barangkeluar_id')->unsigned();
             $table->foreign('barangkeluar_id')->references('id')->on('hbarang_keluar');
             $table->string('keterangan')->nullable();
+            $table->string('penerima')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
